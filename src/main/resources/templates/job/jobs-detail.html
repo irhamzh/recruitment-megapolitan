@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="page-wrapper">
+    <div class="row justify-content-center">
+        <div class="frame-body-detail">
+            <div class="frame-titles">
+                <p style="font-size: 45px;" th:text="${job.getPosition}"></p>
+            </div>
+            <div class="content-detail-sub-title">
+                <div class="row justify-content-center">
+                    <p><span style="color: #eb3f3f">Department: </span><span th:text="${job.getDepartment.getNamaDepartment}"></span>
+                        &nbsp; &nbsp;<span style="color: #eb3f3f">Lokasi: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
+                </div>
+            </div>
+            <div class="content-detail-shortdesc">
+                <div class="row justify-content-center">
+                    <div class="content-shortdesc">
+                        <p><span style="font-weight: bold">Short Description: </span>
+                            <span th:text="${job.department.descDepartment}"></span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="content-detail-sub-button">
+                <div class="row justify-content-center">
+                    <a th:href="@{/jobs/}"
+                       class="btn but-lain">POSISI LAIN</a>
+                    <a th:href="@{/}"
+                       class="btn but-danger">APPLY</a>
+                </div>
+            </div>
+            <div class="detail-description">
+                <div class="row justify-content-left">
+                    <div class="frame-titles">
+                        <p style="font-size: 35px;">Job Descriptions</p>
+                    </div>
+                </div>
+                <div class="detail-list-description">
+                    <div class="row" th:each="description, iterationStatus : ${listDesc}">
+                        <div class="col-1">
+
+                        </div>
+<!--                        <div class="col-1">-->
+<!--                            <div th:text="'-'"></div>-->
+<!--                        </div>-->
+                        <div class="col-8">
+<!--                            <div th:text="${description}"></div>-->
+                            <p><span><i class="fa fa-circle" style="font-size:10px;color: black;"></i></span>&nbsp; &nbsp;<span th:text="${description}"></span></p>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-requirement">
+                <div class="row justify-content-left">
+                    <div class="frame-titles">
+                        <p style="font-size: 35px;">Job Descriptions</p>
+                    </div>
+                </div>
+                <div class="detail-list-requirement">
+                    <div class="row" th:each="requirement, iterationStatus : ${listReq}">
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-8">
+                            <p><span><i class="fa fa-circle" style="font-size:10px;color: black;"></i></span>&nbsp; &nbsp;<span th:text="${requirement}"></span></p>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<nav th:replace="fragments/fragment :: footer"></nav>
+</body>

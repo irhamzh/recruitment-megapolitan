@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="banner" style="height: 40%;">
+            <img src="/img/banner.png"
+                      style=" width:100%; height:100%;">
+        </div>
+        <div class="row justify-content-center">
+            <div class="frame-body">
+                <div class="frame-culture" id="ourCulture">
+                    <div class="frame-titles">
+                        <p>Our Culture</p>
+                    </div>
+<!--                    <p class="frame-titles">Our Culture</p>-->
+                    <div class="frame-culture-body">
+                        <div class="row justify-content-center listCard">
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-scale.png">
+                                <h4>INTEGRITY</h4>
+                                <p>Unified in vision and mission
+                                </p>
+                            </div>
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-teamwork.png" style="width: 205px;">
+                                <h4>TEAMWORK</h4>
+                                <p>Togetherness, solidarity, and
+                                    synergy to give the best and high quality services
+                                </p>
+
+                            </div>
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-grow.png">
+                                <h4>LEARN & GROW</h4>
+                                <p>Continuously improving ability, knowledge, skills,
+                                    and growing simultaneously
+                                </p>
+
+                            </div>
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-help.png">
+                                <h4 style="font-size: 18px">SENSE OF BELONGING</h4>
+                                <p>Loyalty and working with heart
+                                </p>
+
+                            </div>
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-grateful.png" style="width: 205px;">
+                                <h4>GRATITUDE</h4>
+                                <p>Always being grateful for His abundant blessings
+                                </p>
+
+                            </div>
+                            <div class="col-md-3 cardCulture">
+                                <img src="/img/culture-checklist.png">
+                                <h4>RESULT ORIENTED</h4>
+                                <p>Doing all things necessary to achieve company goals,
+                                    missions, and visions
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="frame-workplace" id="ourWorkplace">
+                        <div class="frame-titles">
+                            <p>Our Workplace</p>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="frame-workplace-body">
+                                <p>At PT Megapolitan Developments Tbk, you are given the chance
+                                    to improve your skill and aptitude professionally.
+                                    We encourage you to actively nurture your career growth
+                                    by continuously providing necessary instruments, trainings,
+                                    support, dynamic work environment, and values that will
+                                    help you succeed
+                                </p>
+                                <label class="labelTag">
+                                    <a class="checkboxTag" href="/">
+                                        <span class="spanTag">READY TO JOIN US?</span>
+                                    </a>
+                                </label>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="frame-department">
+                    <div class="frame-titles">
+                        <p>Our Department</p>
+                    </div>
+                    <div class="frame-department-body">
+                        <div class="row justify-content-center listCard">
+                            <div class="col-md-3 cardDepartment" th:each="department, iterationStatus : ${listDepartment}">
+                                <a th:href="@{/jobs/?departmentId=} + ${department.idDepartment}">
+                                    <div class="innerCardDepartment">
+                                        <h4 th:text="${department.namaDepartment}"></h4>
+                                        <img th:src="@{/img/department-} + ${department.idDepartment} + '.png'">
+                                        <p th:text="${department.listJob.size()} + ' Positions'"></p>
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="frame-roles">
+                        <div class="frame-roles-title">
+                            <p>Search For Available Roles</p>
+                        </div>
+                        <div class="frame-roles-body">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="form-group dropdownRoles">
+                                        <select class="form-control" name="dept" onchange="selectOnDept(this)">
+                                            <option selected value="">--Department--</option>
+                                            <option th:each="department :${listDepartment}"
+                                                    th:value="${department.idDepartment}" th:text="${department.namaDepartment}"></option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group dropdownRoles">
+                                        <select class="form-control" name="location" onchange="selectOnLocation(this)">
+                                            <option selected value="">--Lokasi--</option>
+                                            <option th:each="location :${listLocation}"
+                                                    th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <a class="buttonSearch" type="button" id="submitButtonFilter"
+                                       onclick="filterJobs()">
+                                        <i class="fa fa-search" style="font-size:26px;color:#D1334F"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+
+</body>
+<script th:src="@{/js/main.js}"></script>

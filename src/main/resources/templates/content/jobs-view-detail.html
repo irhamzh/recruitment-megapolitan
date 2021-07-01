@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper" >
+        <div class="row">
+            <div class="col-1">
+
+            </div>
+            <div class="col backDiv">
+               <a th:href="@{/content/}">
+                   <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+               </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h3 th:text="${job.position}"></h3>
+                    <div class="row justify-content-end">
+                        <a th:href="@{/content/edit-job/} + ${job.kodeJob}"
+                           class="btn but-danger-outline">Edit</a>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-10">
+
+                            </div>
+                            <div class="col-2">
+                                <p> Status: <span th:text=" ${status}"></span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Kode Job</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${job.kodeJob}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Department</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${job.department.namaDepartment}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Location</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${job.location.namaLocation}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Date Posted</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${#dates.format(job.datePosted, 'dd/MM/yyyy')}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Date Closed</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${#dates.format(job.dateClosed, 'dd/MM/yyyy')}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Job Descriptions</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" th:each="description, iterationStatus : ${listDesc}">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-1">
+                                <div th:text="'-'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${description}"></div>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Job Requirements</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" th:each="requirement, iterationStatus : ${listReq}">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-1">
+                                <div th:text="'-'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${requirement}"></div>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Applicants</div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div th:if="${pesan != ''}" class="pesan-kosong">
+                                <br>
+                                <h5 th:text="${pesan}"></h5>
+                                <br>
+                                <br>
+                            </div>
+                            <div th:if="${pesan == ''}" class="tableJobs-content">
+                                <br>
+                                <table class="table daftar-table table-hover table-bordered">
+                                    <thead>
+                                    <tr class="bg-dark text-center">
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Dikirim</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr
+                                            th:each="applicant, iterationStat : ${job.listApplicant}"
+                                    >
+                                        <td th:text="${iterationStat.count}"></td>
+                                        <td th:text="${applicant.namaAwal} + ' ' + ${applicant.namaAkhir}"></td>
+                                        <td th:text="${applicant.dateSent}}"></td>
+                                        <td>
+                                            <a th:href="@{/content/applicant/} + ${applicant.idApplicant}"
+                                               class="btn but-danger-outline">Detail</a>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+</body>

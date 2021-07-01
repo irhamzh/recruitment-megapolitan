@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Job</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div th:if="${pop} != null" class="overlay" id="center">
+        <div class="row justify-content-center">
+            <div th:if="${pop} == 'green'" class="col-md-5 pop-up-success">
+                <i class="fa fa-check-circle" aria-hidden="true" ></i>
+                <p th:text="${msg}"></p>
+                <a th:href="@{/content}" class="btn">
+                    OK
+                </a>
+            </div>
+            <div th:if="${pop} == 'red'" class="col-md-5 pop-up-failed">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                <p th:text="${msg}"></p>
+                <a th:href="@{/content/add-job}" class="btn">
+                    OK
+                </a>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="row justify-content-center">
+            <div class="frame-body-content">
+                <div class="frame-titles">
+                    <h2>Add A Job</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-card">
+                        <div class="form-card-content">
+                            <form th:action="@{/content/add-job}" th:object="${job}" method="POST" id="submitForm">
+                                <input type="hidden" th:field="*{descJob}" value="tesDesc" id="descTemplate"/>
+                                <input type="hidden" th:field="*{reqJob}" value="tesReq" id="reqTemplate"/>
+                                <input type="hidden" th:field="*{type}" value="sabeb aing la"/>
+                                <br />
+                                Position*<br />
+                                <input class="form-control" type="text" name="position" th:value="${job.position}" required="required"  minlength="1" />
+                                <br />
+                                Department*<br />
+                                <select name="department" class="form-control" th:required="true">
+                                    <option value="">-- Pilih Department --</option>
+                                    <option th:each="department :${listDepartment}"
+                                            th:value="${department.idDepartment}" th:text="${department.namaDepartment}"></option>
+                                </select>
+                                <br />
+                                Location*<br />
+                                <select name="location"  class="form-control" th:required="true">
+                                    <option value="">-- Pilih Lokasi --</option>
+                                    <option th:each="location :${listLocation}"
+                                            th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
+                                </select>
+                                <br />
+                                Due Date*<br />
+                                <input th:value="${job.dateClosed}" type="date" class="form-control"
+                                       name="dateClosed" required>
+                                <br />
+                                <div class="row">
+                                    <div class="col-11" >
+                                        <br>Job Descriptions*<br />
+                                    </div>
+                                    <div class="col-1">
+                                        <a class="btn but-danger" onclick="addBarisDesc()">
+                                            <i class="fa fa-plus" style="color:white"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11" id="col-desc">
+                                        <input  type="text" placeholder="Enter a description"
+                                                class="form-control" id="desc-1" required
+                                                style="margin-bottom: 28px;">
+                                    </div>
+                                    <div class="col-1" id="col-button-desc">
+                                        <button id="hapusDesc-1" type="button" onclick="hapusBaris(this)"
+                                                class="btn but-danger" style="margin-bottom: 24px;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11" >
+                                        <br>Job Requirements*<br />
+                                    </div>
+                                    <div class="col-1">
+                                        <a class="btn but-danger" onclick="addBarisReq()">
+                                            <i class="fa fa-plus" style="color:white"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11" id="col-req">
+                                        <input  type="text" placeholder="Enter a requirement"
+                                                class="form-control" id="req-1" required
+                                                style="margin-bottom: 28px;">
+                                    </div>
+                                    <div class="col-1" id="col-button-req">
+                                        <button id="hapusReq-1" type="button" onclick="hapusBaris(this)"
+                                                class="btn but-danger" style="margin-bottom: 28px;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row justify-content-end">
+                                    <a class="btn but-danger" type="button" th:href="@{/content}">Cancel</a>
+                                    <input type="button" class="btn but-danger-outline" value="Submit" onclick="submitJob()"/>
+
+                                </div>
+
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div>
+        <input id="counter-desc-add" type="hidden" value=1>
+        <input id="counter-req-add" type="hidden" value=1>
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+
+</body>
+<script th:src="@{/js/content-add-job.js}"></script>

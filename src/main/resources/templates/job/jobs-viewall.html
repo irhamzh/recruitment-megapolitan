@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Jobs</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="banner" style="height: 40%;">
+            <img src="/img/banner.png"
+                 style=" width:100%; height:100%;">
+        </div>
+        <div class="row justify-content-center">
+            <div class="frame-titles">
+                <p style="font-size: 45px;"> Open Positions </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="frame-roles-list">
+                <div class="frame-roles-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <div class="form-group dropdownRoles">
+                                <select class="form-control" name="dept" id="selectedDept"
+                                        th:if="${departmentSelect} != null" onchange="selectOnDept(this) ">
+                                    <option th:selected="*{departmentSelect.idDepartment}"
+                                            th:text="*{departmentSelect.namaDepartment}"
+                                            th:value="*{departmentSelect.idDepartment}"></option>
+                                    <option value="">--Department--</option>
+                                    <option th:each="department :${listDepartment}"
+                                            th:value="${department.idDepartment}" th:text="${department.namaDepartment}"></option>
+                                </select>
+                                <select class="form-control" name="dept"
+                                        th:if="${departmentSelect} == null" onchange="selectOnDept(this) " >
+                                    <option selected value="">--Department--</option>
+                                    <option th:each="department :${listDepartment}"
+                                            th:value="${department.idDepartment}" th:text="${department.namaDepartment}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group dropdownRoles">
+                                <select class="form-control" name="location"  id="selectedLoct"
+                                        th:if="${locationSelect} != null" onchange="selectOnLocation(this)">
+                                    <option th:selected="*{locationSelect.idLocation}"
+                                            th:text="*{locationSelect.namaLocation}"
+                                            th:value="*{locationSelect.idLocation}"></option>
+                                    <option value="">--Lokasi--</option>
+                                    <option th:each="location :${listLocation}"
+                                            th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
+                                </select>
+                                <select class="form-control" name="location"
+                                        th:if="${locationSelect} == null" onchange="selectOnLocation(this)">
+                                    <option selected value="">--Lokasi--</option>
+                                    <option th:each="location :${listLocation}"
+                                            th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="buttonSearch" type="button" id="submitButtonFilter"
+                               onclick="filterJobs()">
+                                <i class="fa fa-search" style="font-size:26px;color:#D1334F"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="frameListCard">
+                <div class="row justify-content-center">
+                    <div th:if="${pesan != null}" class="pesan-kosong">
+                        <h4 th:text="${pesan}"></h4>
+                    </div>
+                    <div th:if="${pesan == null}" class="col-9 cardJob" th:each="job, iterationStatus : ${job}">
+                        <div class="row">
+                            <div class="col-6">
+                                <p><span style="color: #991C1F; font-weight: bold" th:text="${job.department.namaDepartment}"></span><span th:text="' - ' + ${job.position}"></span></p>
+
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                            <div class="col-1">
+                                <i class='fa fa-map-marker-alt' style='font-size:15px;color: #D1334F'></span><span th:text="${job.location.namaLocation}"></span></i>
+
+                            </div>
+                            <div class="col-2">
+                                <a th:href="@{/jobs/} + ${job.kodeJob}"
+                                   class="btn">Detail</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+</body>
+<script th:src="@{/js/main.js}"></script>
