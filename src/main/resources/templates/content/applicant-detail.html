@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Applicants</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="row">
+            <div class="col-1">
+
+            </div>
+            <div class="col backDiv">
+                <a th:href="@{/content/job/} + ${applicant.job.kodeJob}">
+                    <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Detail Applicant</h3>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Name</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div><span th:text="${applicant.namaAwal} + ' '"></span><span th:text="${applicant.namaAkhir}"></span></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Email</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${applicant.email}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Date Sent</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${#dates.format(applicant.dateSent, 'dd/MM/yyyy')}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Phone Number</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${applicant.phoneNumber}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" th:if="${applicant.portUrl} != ''">
+                            <div class="col-3">
+                                <div>Portofolio</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${applicant.portUrl}"></div>
+                            </div>
+                        </div>
+                        <div class="row" th:if="${applicant.portUrl} == ''">
+                            <div class="col-3">
+                                <div>Portofolio</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div>-</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" th:if="${applicant.linkedInUrl} != ''">
+                            <div class="col-3">
+                                <div>LinkedIn URL</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${applicant.linkedInUrl}"></div>
+                            </div>
+                        </div>
+                        <div class="row" th:if="${applicant.linkedInUrl} == ''">
+                            <div class="col-3">
+                                <div>LinkedIn URL</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div>-</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Short Description</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${applicant.shortDesc}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>File Resume/CV</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div>
+                                    <span><a th:href="@{/content/download/?idApplicant=} + ${applicant.idApplicant}" th:text="${applicant.namaFile}"></a></span><span th:text="' (' + ${fileSize} + ' KB)'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+</body>

@@ -2,10 +2,7 @@ package megapolitan.recruitment.webrecruitment.controller;
 
 import megapolitan.recruitment.webrecruitment.model.*;
 
-import megapolitan.recruitment.webrecruitment.service.AdminService;
-import megapolitan.recruitment.webrecruitment.service.DepartmentService;
-import megapolitan.recruitment.webrecruitment.service.JobService;
-import megapolitan.recruitment.webrecruitment.service.LocationService;
+import megapolitan.recruitment.webrecruitment.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -13,8 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
@@ -32,6 +32,10 @@ public class JobController {
     @Qualifier("jobServiceImpl")
     @Autowired
     JobService jobService;
+
+    @Qualifier("applicantServiceImpl")
+    @Autowired
+    ApplicantService applicantService;
 
     @GetMapping("/jobs/")
     public String viewAllJobs(
@@ -93,6 +97,72 @@ public class JobController {
         model.addAttribute("listDesc", job.getDescJob().split("---"));
         model.addAttribute("listReq", job.getReqJob().split("---"));
         return "job/jobs-detail";
+    }
+
+    @GetMapping ("/jobs/apply/{kodeJob}")
+    public String applyJob(
+            @PathVariable(value = "kodeJob") String kodeJob,
+            Model model
+    ){
+        JobModel job = jobService.getJobByKodeJob(kodeJob);
+
+//        model.addAttribute("applicant", new ApplicantModel());
+        model.addAttribute("job", job);
+        return "job/jobs-apply";
+    }
+
+    @PostMapping ("/jobs/apply/{kodeJob}")
+    public String applyJobConfirmed(
+            @PathVariable(value = "kodeJob") String kodeJob,
+            @RequestParam("content") MultipartFile multipartFile,
+            @RequestParam("namaAwal") String namaAwal,
+            @RequestParam("namaAkhir") String namaAkhir,
+            @RequestParam("email") String email,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("portUrl") Optional<String> portUrl,
+            @RequestParam("linkedInUrl") Optional<String> linkedInUrl,
+            @RequestParam("shortDesc") String shortDesc,
+            Model model
+    ) throws IOException {
+
+        ApplicantModel applicant = new ApplicantModel();
+
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+
+        JobModel job = jobService.getJobByKodeJob(kodeJob);
+
+        Date date = new Date();
+        applicant.setNamaAwal(namaAwal);
+        applicant.setNamaAkhir(namaAkhir);
+        applicant.setEmail(email);
+        applicant.setPhoneNumber(phoneNumber);
+        applicant.setShortDesc(shortDesc);
+
+        portUrl.ifPresent(applicant::setPortUrl);
+
+        linkedInUrl.ifPresent(applicant::setLinkedInUrl);
+
+        applicant.setDateSent(date);
+        applicant.setNamaFile(fileName);
+        applicant.setContent(multipartFile.getBytes());
+        applicant.setSizeFile(multipartFile.getSize());
+        applicant.setJob(job);
+
+        if (multipartFile.getSize() <= 500000){
+            applicantService.addApplicant(applicant);
+
+            model.addAttribute("pop", "green");
+            model.addAttribute("msg", "Lamaran telah dikirim!");
+        } else{
+            model.addAttribute("pop", "red");
+            model.addAttribute("msg", "Failed!");
+            model.addAttribute("subMsg", "File melebihi 500 KB");
+
+        }
+        model.addAttribute("job", job);
+
+
+        return "job/jobs-apply";
     }
 
 

@@ -775,6 +775,14 @@ td, th {
     font-weight: bold;
 }
 
+.tableJobs-content{
+    min-width: 80% ;
+}
+.tableJobs-content td{
+    align-items: center;
+    text-align: center;
+}
+
 /*JOB-DETAIL*/
 .frame-body-detail{
     width: 80%;

@@ -69,6 +69,21 @@ public class ApplicantModel implements Serializable{
     @JsonIgnore
     private JobModel job;
 
+    //DOCUMENT FILE
+
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "file_name", nullable = false)
+    private String namaFile;
+
+    @NotNull
+    @Column(name = "file_size", nullable = false)
+    private Long sizeFile;
+
+    @NotNull
+    @Column(name = "file_content", nullable = false)
+    private byte[] content;
+
     public Long getIdApplicant() {
         return idApplicant;
     }
@@ -139,5 +154,37 @@ public class ApplicantModel implements Serializable{
 
     public void setJob(JobModel job) {
         this.job = job;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
+    public String getNamaFile() {
+        return namaFile;
+    }
+
+    public void setNamaFile(String namaFile) {
+        this.namaFile = namaFile;
+    }
+
+    public Long getSizeFile() {
+        return sizeFile;
+    }
+
+    public void setSizeFile(Long sizeFile) {
+        this.sizeFile = sizeFile;
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
     }
 }

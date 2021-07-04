@@ -11,6 +11,10 @@ var listReq = [];
 var indexSkipDesc = [];
 var indexSkipReq = [];
 var formValid = "";
+var num1 = 0;
+var num2 = 0;
+var numRes = 0;
+var captchaValid;
 
 function addBarisDesc(){
     console.log("indexskipdesc = " + indexSkipDesc);
@@ -113,6 +117,50 @@ function submitJob(){
 
 
 
+}
+function submitJobApply(){
+    var formValid = document.forms["applyForm"].reportValidity();
 
+    if (formValid){
+        submitCaptcha();
+        if (captchaValid === "true"){
+            var fileUpload = document.getElementById("fileUpload");
+            if (typeof (fileUpload.files) != "undefined") {
+                var size = parseFloat(fileUpload.files[0].size / 1024).toFixed(2);
+
+                if (size > 500){
+                    alert("File melebihi 500 KB")
+                }else{
+                    // alert(size + " KB.");
+                    document.getElementById("applyForm").submit();
+                }
+            }
+        }else if (captchaValid === "random"){
+            console.log("cancel")
+        }else{
+            alert("Captcha Salah \nSilahkan Submit Kembali");
+        }
+        // document.getElementById("applyForm").submit();
+    }
+
+}
+
+function submitCaptcha(){
+    num1 = 0;
+    num2 = 0;
+    numRes = 0;
+
+    num1 = Math.floor(Math.random() * 100) + Math.ceil(Math.random() * 10) ;
+    num2 =( Math.floor(Math.random() * 100) - Math.ceil(Math.random() * 10) > 0 ? Math.floor(Math.random() * 100) - Math.ceil(Math.random() * 10) : Math.floor(Math.random() * 100) - Math.ceil(Math.random() * 10) + 10) ;
+    numRes = num1 + num2;
+
+    var captcha = prompt("Captcha Validation: \nWhat is " + num1 + " + " + num2 + " ?");
+    if (parseInt(captcha) === numRes){
+        captchaValid = "true";
+    } else if (captcha === null || captcha === ''){
+        captchaValid = "random";
+    }else{
+        captchaValid = "false";
+    }
 
 }

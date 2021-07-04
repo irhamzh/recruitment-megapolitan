@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Apply Job</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div th:if="${pop} != null" class="overlay" id="center">
+        <div class="row justify-content-center">
+            <div th:if="${pop} == 'green'" class="col-md-5 pop-up-success">
+                <i class="fa fa-check-circle" aria-hidden="true" ></i>
+                <p th:text="${msg}"></p>
+                <a th:href="@{/jobs/}" class="btn">
+                    OK
+                </a>
+            </div>
+            <div th:if="${pop} == 'red'" class="col-md-5 pop-up-failed">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                <p th:text="${msg}"></p>
+                <p th:text="${subMsg}"></p>
+                <a th:href="@{/jobs/apply/} + ${job.kodeJob}" class="btn">
+                    OK
+                </a>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="row justify-content-center">
+            <div class="frame-body-detail">
+                <div class="frame-titles">
+                    <p style="font-size: 45px;" th:text="${job.getPosition}"></p>
+                </div>
+                <div class="content-detail-sub-title">
+                    <div class="row justify-content-center">
+                        <p><span style="color: #eb3f3f">Department: </span><span th:text="${job.getDepartment.getNamaDepartment}"></span>
+                            &nbsp; &nbsp;<span style="color: #eb3f3f">Lokasi: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-card">
+                        <div class="form-card-content">
+                            <form th:action="@{/jobs/apply/} + ${job.kodeJob}"
+                                  method="POST" id="applyForm" enctype="multipart/form-data">
+                                <br />
+                                First Name*<br />
+                                <input class="form-control" type="text" name="namaAwal"  required="required" />
+                                <br />
+                                Last Name*<br />
+                                <input class="form-control" type="text" name="namaAkhir" required="required" />
+                                <br />
+                                Email*<br />
+                                <input class="form-control" type="text" name="email" required="required" />
+                                <br />
+                                Phone Number*<br />
+                                <input class="form-control" type="text" name="phoneNumber" required="required" />
+                                <br />
+                                Portofolio URL (Optional)<br />
+                                <input class="form-control" type="text" name="portUrl"  />
+                                <br />
+                                LinkedIn URL (Optional)<br />
+                                <input class="form-control" type="text" name="linkedInUrl" />
+                                <br />
+                                Why Should We Hire You*<br />
+                                <textarea style="width: 100%;" form="applyForm" name="shortDesc" required="required"></textarea>
+                                <br />
+                                <br/>
+                                Resume/CV (500KB Max)*<br />
+                                <input type="file" name="content"  accept="application/pdf" id="fileUpload" required="required" />
+                                <br />
+                                <br>
+                                <div class="row justify-content-end">
+                                    <a class="btn but-danger" type="button" th:href="@{/jobs/} + ${job.kodeJob}">Cancel</a>
+                                    <input type="button" class="btn but-danger-outline" value="Submit" onclick="submitJobApply()"/>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="captcha" id="captchaDiv">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+
+
+</body>
+<script th:src="@{/js/content-add-job.js}"></script>

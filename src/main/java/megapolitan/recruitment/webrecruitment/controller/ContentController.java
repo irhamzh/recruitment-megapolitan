@@ -2,10 +2,7 @@ package megapolitan.recruitment.webrecruitment.controller;
 
 import megapolitan.recruitment.webrecruitment.model.*;
 
-import megapolitan.recruitment.webrecruitment.service.AdminService;
-import megapolitan.recruitment.webrecruitment.service.DepartmentService;
-import megapolitan.recruitment.webrecruitment.service.JobService;
-import megapolitan.recruitment.webrecruitment.service.LocationService;
+import megapolitan.recruitment.webrecruitment.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -15,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +39,10 @@ public class ContentController {
     @Qualifier("adminServiceImpl")
     @Autowired
     AdminService adminService;
+
+    @Qualifier("applicantServiceImpl")
+    @Autowired
+    ApplicantService applicantService;
 
 
     @GetMapping("/content")
@@ -256,5 +260,41 @@ public class ContentController {
 
         return "content/jobs-edit-page";
     }
+
+    @GetMapping(value = "content/applicant/{idApplicant}")
+    public String viewApplicant(
+            @PathVariable Long idApplicant,
+            Model model
+    ){
+        ApplicantModel applicant = applicantService.getApplicantByIdApplicant(idApplicant);
+
+        model.addAttribute("applicant", applicant);
+        model.addAttribute("fileSize", (int)Math.floor(applicant.getSizeFile()/1024));
+        return "content/applicant-detail";
+    }
+
+    @GetMapping(value = "content/download/")
+    public void downloadFile(
+            @RequestParam("idApplicant") Long idApplicant,
+            HttpServletResponse response
+    ) throws IOException {
+
+        ApplicantModel applicant = applicantService.getApplicantByIdApplicant(idApplicant);
+
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename = " + applicant.getNamaFile();
+
+        response.setHeader(headerKey, headerValue);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+
+        outputStream.write(applicant.getContent());
+        outputStream.close();
+
+
+    }
+
+
 
 }
