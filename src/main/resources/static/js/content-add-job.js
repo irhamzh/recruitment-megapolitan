@@ -4,6 +4,7 @@ var divDescInput = document.getElementById("col-desc");
 var divDescButton = document.getElementById("col-button-desc");
 var divReqInput = document.getElementById("col-req");
 var divReqButton = document.getElementById("col-button-req");
+var textShortDesc = document.getElementById("textShortDesc");
 var counterDesc = document.getElementById("counter-desc-add").value;
 var counterReq = document.getElementById("counter-req-add").value;
 var listDesc = [];
@@ -73,6 +74,14 @@ function hapusBaris(selectObject){
     }
     console.log(indexSkipDesc);
     console.log(indexSkipReq);
+
+}
+
+function selectLocation(selectObject){
+    var index = selectObject.value;
+    // console.log(text);
+    var text = listLocationDesc[index-1].toString();
+    textShortDesc.value = text;
 
 }
 

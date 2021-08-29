@@ -41,7 +41,7 @@
                             <form th:action="@{/content/add-job}" th:object="${job}" method="POST" id="submitForm">
                                 <input type="hidden" th:field="*{descJob}" value="tesDesc" id="descTemplate"/>
                                 <input type="hidden" th:field="*{reqJob}" value="tesReq" id="reqTemplate"/>
-                                <input type="hidden" th:field="*{type}" value="sabeb aing la"/>
+<!--                                <input type="hidden" th:field="*{type}" value="sabeb aing la"/>-->
                                 <br />
                                 Position*<br />
                                 <input class="form-control" type="text" name="position" th:value="${job.position}" required="required"  minlength="1" />
@@ -54,12 +54,18 @@
                                 </select>
                                 <br />
                                 Location*<br />
-                                <select name="location"  class="form-control" th:required="true">
+                                <select name="location"  class="form-control" th:required="true" onchange="selectLocation(this)">
                                     <option value="">-- Pilih Lokasi --</option>
                                     <option th:each="location :${listLocation}"
                                             th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
                                 </select>
+                                <br/>
+                                Short Description*<br />
+                                <textarea style="width: 100%; height: 150px;" form="submitForm" name="shortDescJob"
+                                          th:value="${job.shortDescJob}"
+                                          required="required" id="textShortDesc"></textarea>
                                 <br />
+                                <br>
                                 Due Date*<br />
                                 <input th:value="${job.dateClosed}" type="date" class="form-control"
                                        name="dateClosed" required>
@@ -137,4 +143,8 @@
     <nav th:replace="fragments/fragment :: footer"></nav>
 
 </body>
+
+<script th:inline="javascript">
+    var listLocationDesc = [[${listLocationDesc}]];
+</script>
 <script th:src="@{/js/content-add-job.js}"></script>

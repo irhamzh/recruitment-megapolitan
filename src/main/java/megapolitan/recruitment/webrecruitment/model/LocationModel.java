@@ -28,7 +28,7 @@ public class LocationModel implements Serializable{
     private String namaLocation;
 
     @NotNull
-    @Size(max = 250)
+    @Size(max =500)
     @Column(name = "desc_location", nullable = false)
     private String descLocation;
 

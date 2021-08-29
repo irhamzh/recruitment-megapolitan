@@ -557,6 +557,21 @@ body {
     font-weight: bold;
 }
 
+.dropdownRolesContent{
+    color: #808080;
+}
+
+.dropdownRolesContent .form-control{
+    color: #808080;
+    font-size: 15px;
+}
+.buttonSearchContent{
+    background-color: white;
+    border: 1px solid #fb6152;
+    padding: 7px 10px 7px 10px;
+    border-radius: 5px;
+}
+
 table {
     border-collapse: collapse;
     table-layout: auto;
@@ -652,6 +667,10 @@ td, th {
     color: #808080;
     letter-spacing: 2px;
     margin-top: 20px;
+}
+
+.pageNumber a{
+    color: #eb3f3f;
 }
 
 /*CONTENT-addjob*/
@@ -903,3 +922,4 @@ td, th {
 .cardJob .col-2 a:hover{
     box-shadow: 3px 2px 3px #888888;
 }
+

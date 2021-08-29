@@ -33,12 +33,12 @@ public class JobModel implements Serializable {
     private String position;
 
     @NotNull
-    @Size(max = 250)
+    @Size(max = 1500)
     @Column(name = "desc_job", nullable = false)
     private String descJob;
 
     @NotNull
-    @Size(max = 250)
+    @Size(max = 1500)
     @Column(name = "req_job", nullable = false)
     private String reqJob;
 
@@ -56,9 +56,9 @@ public class JobModel implements Serializable {
     //type refers to full time or level entry or manager or something
     // *can be changed, not final*
     @NotNull
-    @Size(max = 50)
-    @Column(name = "type_job", nullable = false)
-    private String type;
+    @Size(max = 500)
+    @Column(name = "short_desc_job", nullable = false)
+    private String shortDescJob;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_department", referencedColumnName = "id_department", nullable = false)
@@ -123,12 +123,12 @@ public class JobModel implements Serializable {
         this.dateClosed = dateClosed;
     }
 
-    public String getType() {
-        return type;
+    public String getShortDescJob() {
+        return shortDescJob;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setShortDescJob(String shortDescJob) {
+        this.shortDescJob = shortDescJob;
     }
 
     public DepartmentModel getDepartment() {

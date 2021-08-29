@@ -20,14 +20,14 @@
             <div class="content-detail-sub-title">
                 <div class="row justify-content-center">
                     <p><span style="color: #eb3f3f">Department: </span><span th:text="${job.getDepartment.getNamaDepartment}"></span>
-                        &nbsp; &nbsp;<span style="color: #eb3f3f">Lokasi: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
+                        &nbsp; &nbsp;<span style="color: #eb3f3f">Location: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
                 </div>
             </div>
             <div class="content-detail-shortdesc">
                 <div class="row justify-content-center">
                     <div class="content-shortdesc">
                         <p><span style="font-weight: bold">Short Description: </span>
-                            <span th:text="${job.department.descDepartment}"></span>
+                            <span th:text="${job.shortDescJob}"></span>
                         </p>
                     </div>
 
@@ -36,7 +36,7 @@
             <div class="content-detail-sub-button">
                 <div class="row justify-content-center">
                     <a th:href="@{/jobs/}"
-                       class="btn but-lain">POSISI LAIN</a>
+                       class="btn but-lain">OTHER POSITIONS</a>
                     <a th:href="@{/jobs/apply/} + ${job.kodeJob}"
                        class="btn but-danger">APPLY</a>
                 </div>
@@ -67,7 +67,7 @@
             <div class="detail-requirement">
                 <div class="row justify-content-left">
                     <div class="frame-titles">
-                        <p style="font-size: 35px;">Job Descriptions</p>
+                        <p style="font-size: 35px;">Job Requirements</p>
                     </div>
                 </div>
                 <div class="detail-list-requirement">

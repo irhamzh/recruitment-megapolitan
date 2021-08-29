@@ -32,9 +32,14 @@ public class ApplicantModel implements Serializable{
     @Column(name = "last_name", nullable = false)
     private String namaAkhir;
 
+//    @NotNull
+//    @Size(max = 50)
+//    @Column(name = "email", nullable = false, unique = true)
+//    private String email;
+
     @NotNull
     @Size(max = 50)
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @NotNull
@@ -43,7 +48,7 @@ public class ApplicantModel implements Serializable{
     private String phoneNumber;
 
     @NotNull
-    @Size(max = 250)
+    @Size(max = 1500)
     @Column(name = "short_description", nullable = false)
     private String shortDesc;
 

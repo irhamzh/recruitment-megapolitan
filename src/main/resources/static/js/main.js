@@ -3,7 +3,8 @@ var deptTemp = "";
 var loctTemp = "";
 var department = "";
 var lokasi = "";
-var baseUrl = "  /jobs/";
+var baseUrl = "/jobs/";
+var baseContentUrl = "/contents/";
 var url = "";
 var countDept = 0;
 var countLoct = 0;
@@ -11,14 +12,14 @@ var countLoct = 0;
 //
 function selectOnDept(selectObject){
     deptTemp = selectObject.value;
-    console.log(department);
+    console.log(deptTemp);
     countDept++;
 }
 
 
 function selectOnLocation(selectObject){
     loctTemp = selectObject.value;
-    console.log(lokasi);
+    console.log(loctTemp);
     countLoct++;
 }
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Content</title>
+    <title>Manage Jobs</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
@@ -52,12 +52,72 @@
                 <div class="frame-titles">
                     <p>Manage Jobs</p>
                 </div>
-                <div  sec:authorize="hasAnyAuthority('Factory Manager', 'Admin')">
-                    <label class="labelTag" >
-                        <a class="checkboxTag" th:href="@{/content/add-job}">
-                            <span class="spanTag">Post A Job</span>
-                        </a>
-                    </label>
+                <br>
+                <form th:action="@{/contents}" method="POST">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <div class="form-group dropdownRolesContent">
+                                <select class="form-control" name="departmentId" onchange="selectOnDept(this)">
+                                    <option selected value="">--Department--</option>
+                                    <option th:each="department :${listDepartment}"
+                                            th:value="${department.idDepartment}" th:text="${department.namaDepartment}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group dropdownRolesContent">
+                                <select class="form-control" name="lokasiId" onchange="selectOnLocation(this)">
+                                    <option selected value="">--Location--</option>
+                                    <option th:each="location :${listLocation}"
+                                            th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-3">
+
+                        </div>
+                        <div class="col" style="width: auto; padding-left: 12px; margin-left: 25px;display: inline-flex">
+                            <div class="row justify-content-center">
+                                <input placeholder="Enter a keyword" type="search" name="search"
+                                       size="50" class="col-9 form-control" style="margin:6px 0 0 23px"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">
+                        <button class="btn but-danger" type="submit" value="Submit">
+                            <i class="fas fa-search" aria-hidden="true" style="font-size: 18px;">
+                            </i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+                    <div class="row">
+                        <div class="col-2">
+                            <label class="labelTag" style="margin-left: 20px;">
+                                <a class="checkboxTag" th:href="@{/content/add-job}">
+                                    <span class="spanTag">Post A Job</span>
+                                </a>
+                            </label>
+                        </div>
+                        <div class="col-7">
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="labelTag" style="margin-left: 80px;" >
+                                <a class="checkboxTag" th:href="@{/content/viewall-applicants}">
+                                    <span class="spanTag">View Applicants</span>
+                                </a>
+                            </label>
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="row justify-content-center">
                     <div th:if="${pesan != null}" class="pesan-kosong">
@@ -69,25 +129,25 @@
                             <tr class="bg-dark text-center">
                                 <th>No</th>
                                 <th>
-                                    <a th:href="@{'/content/sorted/?sortField=position&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                    <a th:href="@{'/content/page/' + ${pageNo} + '/?sortField=position&sortDir=' + ${reverseSortDir}}" style="color:white;">
                                         <div th:if="${sortField} != 'position'">
                                             <i class="fa fa-sort"></i>
-                                            Posisi
+                                            Position
                                         </div>
                                         <div th:if="${sortField} == 'position'">
                                             <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
                                             <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
-                                            Posisi
+                                            Position
                                         </div>
                                     </a>
                                 </th>
                                 <th>
-                                    <a th:href="@{'/content/sorted/?sortField=department&sortDir=' + ${reverseSortDir}}" style="color:white;">
-                                        <div th:if="${sortField} != 'department'">
+                                    <a th:href="@{'/content/page/' + ${pageNo} + '/?sortField=department.namaDepartment&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'department.namaDepartment'">
                                             <i class="fa fa-sort"></i>
                                             Department
                                         </div>
-                                        <div th:if="${sortField} == 'department'">
+                                        <div th:if="${sortField} == 'department.namaDepartment'">
                                             <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
                                             <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
                                             Department
@@ -95,52 +155,44 @@
                                     </a>
                                 </th>
                                 <th>
-                                    <a th:href="@{'/content/sorted/?sortField=location&sortDir=' + ${reverseSortDir}}" style="color:white;">
-                                        <div th:if="${sortField} != 'location'">
+                                    <a th:href="@{'/content/page/' + ${pageNo} + '/?sortField=location.namaLocation&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'location.namaLocation'">
                                             <i class="fa fa-sort"></i>
-                                            Lokasi
+                                            Location
                                         </div>
-                                        <div th:if="${sortField} == 'location'">
+                                        <div th:if="${sortField} == 'location.namaLocation'">
                                             <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
                                             <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
-                                            Lokasi
+                                            Location
                                         </div>
                                     </a>
                                 </th>
                                 <th>
-                                    <a th:href="@{'/content/sorted/?sortField=datePosted&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                    <a th:href="@{'/content/page/' + ${pageNo} + '/?sortField=datePosted&sortDir=' + ${reverseSortDir}}" style="color:white;">
                                         <div th:if="${sortField} != 'datePosted'">
                                             <i class="fa fa-sort"></i>
-                                            Tanggal Dibuat
+                                            Date Posted
                                         </div>
                                         <div th:if="${sortField} == 'datePosted'">
                                             <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
                                             <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
-                                            Tanggal Dibuat
+                                            Date Posted
                                         </div>
                                     </a>
                                 </th>
-                                <th>
-                                    <a th:href="@{'/content/sorted/?sortField=listApplicant&sortDir=' + ${reverseSortDir}}" style="color:white;">
-                                        <div th:if="${sortField} != 'listApplicant'">
-                                            <i class="fa fa-sort"></i>
-                                            Jumlah Pelamar
-                                        </div>
-                                        <div th:if="${sortField} == 'listApplicant'">
-                                            <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
-                                            <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
-                                            Jumlah Pelamar
-                                        </div>
-                                    </a>
-                                </th>
-                                <th>Aksi</th>
+                                <th>Number of Applicants</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr
                                     th:each="job, iterationStatus : ${listJob}"
                             >
-                                <td th:text="${iterationStatus.count}"></td>
+<!--                                <td th:text="${iterationStatus.count}"></td>-->
+                                <td th:with="count = ${iterationStatus.count}, pageSize = 10,
+                                pageNo = ${pageNo} ,number = ${count + (pageSize * pageNo - pageSize)}">
+                                    <p th:text="${number}"></p>
+                                </td>
                                 <td th:text="${job.position}"></td>
                                 <td th:text="${job.department.namaDepartment}"></td>
                                 <td th:text="${job.location.namaLocation}"></td>
@@ -149,24 +201,75 @@
                                 <td>
                                     <div class="inline-buts" id="table-nowrap">
                                         <a th:href="@{/content/confirmation-delete/} + ${job.kodeJob}"
-                                           class="btn but-danger">Hapus</a>
+                                           class="btn but-danger">Delete</a>
                                         <a th:href="@{/content/job/} + ${job.kodeJob}"
                                            class="btn but-danger-outline">Detail</a>
                                     </div>
                                 </td>
                             </tr>
-
-
                             </tbody>
-
-
                         </table>
                     </div>
-                </div>
 
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div th:if="${totalPage > 1}" class="frame-body-content">
+                    <div class="row justify-content-center">
+                        <div style="width: 50px;">
+                        </div>
+                        <div class="col-sm-2">
+                            Total Rows: [[${totalItem}]]
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-1">
+                            <span th:if="${pageNo > 1}" class="pageNumber">
+                                <a th:if="${sortField != 'none'}" th:href="@{'/content/page/' + ${pageNo - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+                                <a th:if="${sortField == 'none'}" th:href="@{'/content/page/' + ${pageNo - 1}}">Previous</a>
+                            </span>
+                            <span th:if="${pageNo == 1}">
+                                    Previous
+                            </span>
+                        </div>
+                        <div class="col-sm-1">
+                            <span th:each="i: ${#numbers.sequence(1, totalPage)}">
+                                <span  th:if="${pageNo != i}" class="pageNumber">
+                                    <a th:if="${sortField != 'none'}" th:href="@{'/content/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                    <a th:if="${sortField == 'none'}" th:href="@{'/content/page/' + ${i}}">[[${i}]]</a>
+                                </span>
+                                <span th:if="${pageNo == i}">
+                                    &nbsp;
+                                    [[${i}]] &nbsp;&nbsp;
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-sm-1">
+                            <span th:if="${pageNo < totalPage}" class="pageNumber">
+                                <a th:if="${sortField != 'none'}" th:href="@{'/content/page/' + ${pageNo + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                                <a th:if="${sortField == 'none'}" th:href="@{'/content/page/' + ${pageNo + 1}}">Next</a>
+                            </span>
+                            <span th:if="${pageNo >= totalPage}">
+                                    Next
+                            </span>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-2">
+                            <span th:if="${pageNo < totalPage}" class="pageNumber">
+                                <a th:if="${sortField != 'none'}" th:href="@{'/content/page/' + ${totalPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                                <a th:if="${sortField == 'none'}" th:href="@{'/content/page/' + ${totalPage}}">Last</a>
+                            </span>
+                            <span th:if="${pageNo >= totalPage}">
+                                    Last
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <nav th:replace="fragments/fragment :: footer"></nav>
+        <nav th:replace="fragments/fragment :: footer"></nav>
 
 </body>
+<!--<script th:src="@{/js/main.js}"></script>-->

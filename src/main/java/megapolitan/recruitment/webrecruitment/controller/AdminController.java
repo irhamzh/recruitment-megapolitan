@@ -2,8 +2,7 @@ package megapolitan.recruitment.webrecruitment.controller;
 import java.security.Principal;
 import java.util.List;
 
-import megapolitan.recruitment.webrecruitment.model.AdminModel;
-import megapolitan.recruitment.webrecruitment.model.LocationModel;
+import megapolitan.recruitment.webrecruitment.model.*;
 import megapolitan.recruitment.webrecruitment.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import megapolitan.recruitment.webrecruitment.service.DepartmentService;
 import megapolitan.recruitment.webrecruitment.service.LocationService;
-import megapolitan.recruitment.webrecruitment.model.DepartmentModel;
 import megapolitan.recruitment.webrecruitment.model.LocationModel;
 import megapolitan.recruitment.webrecruitment.model.AdminModel;
 import megapolitan.recruitment.webrecruitment.service.AdminService;
@@ -47,6 +45,19 @@ public class AdminController {
     public String home(Model model) {
         List<DepartmentModel> listDepartment = departmentService.getListDepartment();
         List<LocationModel> listLocation = locationService.getListLocation();
+
+        Date newDate = new Date();
+        
+        for (int i = 0; i < listDepartment.size(); i ++){
+            List<JobModel> jobCatch =  new ArrayList<>();
+            for (int j = 0; j < listDepartment.get(i).getListJob().size(); j++){
+                if (newDate.compareTo(listDepartment.get(i).getListJob().get(j).getDateClosed()) < 0){
+                    jobCatch.add(listDepartment.get(i).getListJob().get(j));
+                }
+            }
+            listDepartment.get(i).getListJob().clear();
+            listDepartment.get(i).getListJob().addAll(jobCatch);
+        }
         model.addAttribute("listDepartment", listDepartment);
         model.addAttribute("listLocation", listLocation);
         return "main";

@@ -44,7 +44,7 @@
                         </div>
                         <div class="row">
                             <div class="col-3">
-                                <div>Kode Job</div>
+                                <div>Job Code</div>
                             </div>
                             <div class="col-1">
                                 <div th:text="':'"></div>
@@ -75,6 +75,18 @@
                             </div>
                             <div class="col-8">
                                 <div th:text="${job.location.namaLocation}"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-3">
+                                <div>Short Description</div>
+                            </div>
+                            <div class="col-1">
+                                <div th:text="':'"></div>
+                            </div>
+                            <div class="col-8">
+                                <div th:text="${job.shortDescJob}"></div>
                             </div>
                         </div>
                         <br>
@@ -158,9 +170,9 @@
                                     <thead>
                                     <tr class="bg-dark text-center">
                                         <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Dikirim</th>
-                                        <th>Aksi</th>
+                                        <th>Name</th>
+                                        <th>Date Sent</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>

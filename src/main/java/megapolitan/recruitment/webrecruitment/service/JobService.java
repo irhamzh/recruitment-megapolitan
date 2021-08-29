@@ -11,7 +11,7 @@ import java.util.List;
 public interface JobService {
     List<JobModel> getListJob();
 
-    Page<JobModel> findPaginated(String sortField, String sortDir);
+    Page<JobModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
     void addJob(JobModel job);
 
@@ -24,4 +24,6 @@ public interface JobService {
     List<JobModel> getListByLocation(LocationModel location);
 
     List<JobModel> getListByDepartmentAndLocation(DepartmentModel department, LocationModel location);
+
+    List<JobModel> getListBySearch(String position);
 }

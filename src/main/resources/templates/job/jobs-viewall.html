@@ -51,13 +51,13 @@
                                     <option th:selected="*{locationSelect.idLocation}"
                                             th:text="*{locationSelect.namaLocation}"
                                             th:value="*{locationSelect.idLocation}"></option>
-                                    <option value="">--Lokasi--</option>
+                                    <option value="">--Location--</option>
                                     <option th:each="location :${listLocation}"
                                             th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
                                 </select>
                                 <select class="form-control" name="location"
                                         th:if="${locationSelect} == null" onchange="selectOnLocation(this)">
-                                    <option selected value="">--Lokasi--</option>
+                                    <option selected value="">--Location--</option>
                                     <option th:each="location :${listLocation}"
                                             th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
                                 </select>

@@ -27,10 +27,10 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public Page<JobModel> findPaginated(String sortField, String sortDir){
+    public Page<JobModel> findPaginated(int pageNo, int pageSize, String sortField, String sortDir){
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(0,jobDb.findAll().size(),sort);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
         return jobDb.findAll(pageable);
     }
 
@@ -62,5 +62,10 @@ public class JobServiceImpl implements JobService{
     @Override
     public List<JobModel> getListByDepartmentAndLocation(DepartmentModel department, LocationModel location){
         return jobDb.findByDepartmentAndLocation(department,location);
+    }
+
+    @Override
+    public List<JobModel> getListBySearch(String position){
+        return jobDb.findByPositionIgnoreCaseContaining(position);
     }
 }

@@ -17,4 +17,5 @@ public interface JobDb extends JpaRepository<JobModel,Long>{
     List<JobModel> findByDepartment(DepartmentModel department);
     List<JobModel> findByLocation(LocationModel location);
     List<JobModel> findByDepartmentAndLocation(DepartmentModel department, LocationModel location);
+    List<JobModel> findByPositionIgnoreCaseContaining(String position);
 }

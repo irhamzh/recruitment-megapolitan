@@ -109,6 +109,7 @@
                                         <img th:src="@{/img/department-} + ${department.idDepartment} + '.png'">
                                         <p th:text="${department.listJob.size()} + ' Positions'"></p>
 
+
                                     </div>
                                 </a>
                             </div>
@@ -135,7 +136,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group dropdownRoles">
                                         <select class="form-control" name="location" onchange="selectOnLocation(this)">
-                                            <option selected value="">--Lokasi--</option>
+                                            <option selected value="">--Location--</option>
                                             <option th:each="location :${listLocation}"
                                                     th:value="${location.idLocation}" th:text="${location.namaLocation}"></option>
                                         </select>

@@ -27,10 +27,10 @@ public class DepartmentModel implements Serializable{
     @Column(name = "nama_department", nullable = false)
     private String namaDepartment;
 
-    @NotNull
-    @Size(max = 250)
-    @Column(name = "desc_department", nullable = false)
-    private String descDepartment;
+//    @NotNull
+//    @Size(max = 250)
+//    @Column(name = "desc_department", nullable = false)
+//    private String descDepartment;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<JobModel> listJob;
@@ -51,13 +51,13 @@ public class DepartmentModel implements Serializable{
         this.namaDepartment = namaDepartment;
     }
 
-    public String getDescDepartment() {
-        return descDepartment;
-    }
-
-    public void setDescDepartment(String descDepartment) {
-        this.descDepartment = descDepartment;
-    }
+//    public String getDescDepartment() {
+//        return descDepartment;
+//    }
+//
+//    public void setDescDepartment(String descDepartment) {
+//        this.descDepartment = descDepartment;
+//    }
 
     public List<JobModel> getListJob() {
         return listJob;

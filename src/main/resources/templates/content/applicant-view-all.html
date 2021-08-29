@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Content</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="page-wrapper">
+        <div class="row justify-content-center">
+            <div class="frame-body-content">
+                <div class="frame-titles">
+                    <p>Manage Applicants</p>
+                </div>
+                <br>
+                <form th:action="@{/contents/viewall-applicants}" method="POST">
+                    <div class="row justify-content-center">
+                        <div class="col-3">
+
+                        </div>
+                        <div class="col" style="width: auto; padding-left: 12px;display: inline-flex">
+                            <div class="row justify-content-center">
+                                <input placeholder="Enter a keyword" type="search" name="search"
+                                       size="50" class="col-9 form-control" style="margin:6px 0 0 23px"/>
+                            </div>
+                            <button class="btn but-danger" type="submit" value="Submit">
+                                <i class="fas fa-search" aria-hidden="true" style="font-size: 18px;">
+                                </i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <div class="row">
+                        <div class="col-2">
+
+                        </div>
+                        <div class="col-7">
+
+                        </div>
+
+                        <div class="col-3">
+                            <label class="labelTag" style="margin-left: 40px;" >
+                                <a class="checkboxTag" th:href="@{/content}">
+                                    <span class="spanTag">View Jobs</span>
+                                </a>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div th:if="${pesan != null}" class="pesan-kosong">
+                        <h4 th:text="${pesan}"></h4>
+                    </div>
+                    <div th:if="${pesan == null}" class="tableJobs-content">
+                        <table class="table daftar-table table-hover table-bordered">
+                            <thead>
+                            <tr class="bg-dark text-center">
+                                <th>No</th>
+                                <th>
+                                    <a th:href="@{'/content/viewall-applicants/page/' + ${pageNo} + '/?sortField=namaAwal&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'namaAwal'">
+                                            <i class="fa fa-sort"></i>
+                                            Name
+                                        </div>
+                                        <div th:if="${sortField} == 'namaAwal'">
+                                            <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
+                                            <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
+                                            Name
+                                        </div>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a th:href="@{'/content/viewall-applicants/page/' + ${pageNo} + '/?sortField=job.department.namaDepartment&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'job.department.namaDepartment'">
+                                            <i class="fa fa-sort"></i>
+                                            Department
+                                        </div>
+                                        <div th:if="${sortField} == 'job.department.namaDepartment'">
+                                            <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
+                                            <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
+                                            Department
+                                        </div>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a th:href="@{'/content/viewall-applicants/page/' + ${pageNo} + '/?sortField=job.position&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'job.position'">
+                                            <i class="fa fa-sort"></i>
+                                            Position
+                                        </div>
+                                        <div th:if="${sortField} == 'job.position'">
+                                            <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
+                                            <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
+                                            Position
+                                        </div>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a th:href="@{'/content/viewall-applicants/page/' + ${pageNo} + '/?sortField=dateSent&sortDir=' + ${reverseSortDir}}" style="color:white;">
+                                        <div th:if="${sortField} != 'dateSent'">
+                                            <i class="fa fa-sort"></i>
+                                            Date
+                                        </div>
+                                        <div th:if="${sortField} == 'dateSent'">
+                                            <i th:if="${reverseSortDir} == 'asc'" class="fa fa-caret-down"></i>
+                                            <i th:if="${reverseSortDir} == 'desc'" class="fa fa-caret-up"></i>
+                                            Date
+                                        </div>
+                                    </a>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr
+                                    th:each="applicant, iterationStatus : ${listApplicant}"
+                            >
+                                <td th:with="count = ${iterationStatus.count}, pageSize = 10,
+                                pageNo = ${pageNo} ,number = ${count + (pageSize * pageNo - pageSize)}">
+                                    <p th:text="${number}"></p>
+                                </td>
+                                <td th:text="${applicant.namaAwal} + ' ' + ${applicant.namaAkhir}"></td>
+                                <td th:text="${applicant.job.department.namaDepartment}"></td>
+                                <td th:text="${applicant.job.position}"></td>
+                                <td th:text="${applicant.dateSent}"></td>
+                                <td>
+                                    <a th:href="@{/content/applicants/} + ${applicant.idApplicant}"
+                                       class="btn but-danger-outline">Detail</a>
+                                </td>
+
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div th:if="${totalPage > 1}" class="frame-body-content">
+                <div class="row justify-content-center">
+                    <div style="width: 50px;">
+                    </div>
+                    <div class="col-sm-2">
+                        Total Rows: [[${totalItem}]]
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-1">
+                    <span th:if="${pageNo > 1}" class="pageNumber">
+                        <a th:if="${sortField != 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${pageNo - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+                        <a th:if="${sortField == 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${pageNo - 1}}">Previous</a>
+                    </span>
+                        <span th:if="${pageNo == 1}">
+                        Previous
+                    </span>
+                    </div>
+                    <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1, totalPage)}">
+                        <span  th:if="${pageNo != i}" class="pageNumber">
+                            <a th:if="${sortField != 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            <a th:if="${sortField == 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${i}}">[[${i}]]</a>
+                        </span>
+                        <span th:if="${pageNo == i}">
+                            &nbsp
+                            [[${i}]] &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    </div>
+                    <div class="col-sm-1">
+                    <span th:if="${pageNo < totalPage}" class="pageNumber">
+                        <a th:if="${sortField != 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${pageNo + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                        <a th:if="${sortField == 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${pageNo + 1}}">Next</a>
+                    </span>
+                        <span th:if="${pageNo >= totalPage}">
+                        Next
+                    </span>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-2">
+                    <span th:if="${pageNo < totalPage}" class="pageNumber">
+                        <a th:if="${sortField != 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${totalPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                        <a th:if="${sortField == 'none'}" th:href="@{'/content/viewall-applicants/page/' + ${totalPage}}">Last</a>
+                    </span>
+                    <span th:if="${pageNo >= totalPage}">
+                        Last
+                    </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="fragments/fragment :: footer"></nav>
+
+</body>
