@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-template">
+                    <h1>
+                        Oops!</h1>
+                    <h2>
+                        403 Access Forbidden</h2>
+                    <div class="error-details">
+                        Sorry! You don't have the permission to access this page
+                    </div>
+                    <div class="error-actions">
+                        <a th:href="@{/}" class="btn but-danger">
+                            <span> <i class="fas fa-home"></i></span>
+                            Take Me Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav th:replace="fragments/fragment :: footer"></nav>
+
+</body>

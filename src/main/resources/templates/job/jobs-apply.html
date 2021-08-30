@@ -31,62 +31,86 @@
     </div>
     <nav th:replace="fragments/fragment :: navbar"></nav>
     <div class="page-wrapper">
-        <div class="row justify-content-center">
-            <div class="frame-body-detail">
-                <div class="frame-titles">
-                    <p style="font-size: 45px;" th:text="${job.getPosition}"></p>
+        <div th:if="${legality} == 'illegal'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="error-template">
+                            <h1>
+                                Oops!</h1>
+                            <h2>
+                                404 Not Found</h2>
+                            <div class="error-details">
+                                Sorry, an error has occured, Requested page not found!
+                            </div>
+                            <div class="error-actions">
+                                <a th:href="@{/}" class="btn but-danger">
+                                    <span> <i class="fas fa-home"></i></span>
+                                    Take Me Home</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content-detail-sub-title">
+            </div>
+        </div>
+        <div th:if="${legality} != 'illegal'">
+            <div class="row justify-content-center">
+                <div class="frame-body-detail">
+                    <div class="frame-titles">
+                        <p style="font-size: 45px;" th:text="${job.getPosition}"></p>
+                    </div>
+                    <div class="content-detail-sub-title">
+                        <div class="row justify-content-center">
+                            <p><span style="color: #eb3f3f">Department: </span><span th:text="${job.getDepartment.getNamaDepartment}"></span>
+                                &nbsp; &nbsp;<span style="color: #eb3f3f">Lokasi: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
+                        </div>
+                    </div>
                     <div class="row justify-content-center">
-                        <p><span style="color: #eb3f3f">Department: </span><span th:text="${job.getDepartment.getNamaDepartment}"></span>
-                            &nbsp; &nbsp;<span style="color: #eb3f3f">Lokasi: </span><span th:text="${job.getLocation.getNamaLocation}"></span></p>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="form-card">
-                        <div class="form-card-content">
-                            <form th:action="@{/jobs/apply/} + ${job.kodeJob}"
-                                  method="POST" id="applyForm" enctype="multipart/form-data">
-                                <br />
-                                First Name*<br />
-                                <input class="form-control" type="text" name="namaAwal"  required="required" />
-                                <br />
-                                Last Name*<br />
-                                <input class="form-control" type="text" name="namaAkhir" required="required" />
-                                <br />
-                                Email*<br />
-                                <input class="form-control" type="text" name="email" required="required" />
-                                <br />
-                                Phone Number*<br />
-                                <input class="form-control" type="text" name="phoneNumber" required="required" />
-                                <br />
-                                Portofolio URL (Optional)<br />
-                                <input class="form-control" type="text" name="portUrl"  />
-                                <br />
-                                LinkedIn URL (Optional)<br />
-                                <input class="form-control" type="text" name="linkedInUrl" />
-                                <br />
-                                Why Should We Hire You*<br />
-                                <textarea style="width: 100%; height: 150px;" form="applyForm" name="shortDesc" required="required"></textarea>
-                                <br />
-                                <br/>
-                                Resume/CV (500KB Max)*<br />
-                                <input type="file" name="content"  accept="application/pdf" id="fileUpload" required="required" />
-                                <br />
-                                <br>
-                                <div class="row justify-content-end">
-                                    <a class="btn but-danger" type="button" th:href="@{/jobs/} + ${job.kodeJob}">Cancel</a>
-                                    <input type="button" class="btn but-danger-outline" value="Submit" onclick="submitJobApply()"/>
-                                </div>
+                        <div class="form-card">
+                            <div class="form-card-content">
+                                <form th:action="@{/jobs/apply/} + ${job.kodeJob}"
+                                      method="POST" id="applyForm" enctype="multipart/form-data">
+                                    <br />
+                                    First Name*<br />
+                                    <input class="form-control" type="text" name="namaAwal"  required="required" />
+                                    <br />
+                                    Last Name*<br />
+                                    <input class="form-control" type="text" name="namaAkhir" required="required" />
+                                    <br />
+                                    Email*<br />
+                                    <input class="form-control" type="text" name="email" required="required" />
+                                    <br />
+                                    Phone Number*<br />
+                                    <input class="form-control" type="text" name="phoneNumber" required="required" />
+                                    <br />
+                                    Portofolio URL (Optional)<br />
+                                    <input class="form-control" type="text" name="portUrl"  />
+                                    <br />
+                                    LinkedIn URL (Optional)<br />
+                                    <input class="form-control" type="text" name="linkedInUrl" />
+                                    <br />
+                                    Why Should We Hire You*<br />
+                                    <textarea style="width: 100%; height: 150px;" form="applyForm" name="shortDesc" required="required"></textarea>
+                                    <br />
+                                    <br/>
+                                    Resume/CV (500KB Max)*<br />
+                                    <input type="file" name="content"  accept="application/pdf" id="fileUpload" required="required" />
+                                    <br />
+                                    <br>
+                                    <div class="row justify-content-end">
+                                        <a class="btn but-danger" type="button" th:href="@{/jobs/} + ${job.kodeJob}">Cancel</a>
+                                        <input type="button" class="btn but-danger-outline" value="Submit" onclick="submitJobApply()"/>
+                                    </div>
 
-                            </form>
+                                </form>
 
+                            </div>
+                            <div class="captcha" id="captchaDiv">
+
+                            </div>
                         </div>
-                        <div class="captcha" id="captchaDiv">
 
-                        </div>
                     </div>
-
                 </div>
             </div>
         </div>

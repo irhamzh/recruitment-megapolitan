@@ -112,6 +112,12 @@ public class JobController {
 
         JobModel job = jobService.getJobByKodeJob(kodeJob);
 
+        Date newDate = new Date();
+        if (newDate.compareTo(job.getDateClosed()) >= 0){
+            model.addAttribute("legality", "illegal");
+        }
+
+
         model.addAttribute("job", job);
         model.addAttribute("listDesc", job.getDescJob().split("---"));
         model.addAttribute("listReq", job.getReqJob().split("---"));
@@ -124,6 +130,10 @@ public class JobController {
             Model model
     ){
         JobModel job = jobService.getJobByKodeJob(kodeJob);
+        Date newDate = new Date();
+        if (newDate.compareTo(job.getDateClosed()) >= 0){
+            model.addAttribute("legality", "illegal");
+        }
 
 //        model.addAttribute("applicant", new ApplicantModel());
         model.addAttribute("job", job);
@@ -152,6 +162,11 @@ public class JobController {
         JobModel job = jobService.getJobByKodeJob(kodeJob);
 
         Date date = new Date();
+
+        if (date.compareTo(job.getDateClosed()) >= 0){
+            model.addAttribute("legality", "illegal");
+        }
+
         applicant.setNamaAwal(namaAwal);
         applicant.setNamaAkhir(namaAkhir);
         applicant.setEmail(email);
