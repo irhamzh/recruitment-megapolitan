@@ -207,8 +207,8 @@ public class JobController {
             String mailContent = "A new application for Job " + applicant.getJob().getPosition() + " in Department " + applicant.getJob().getDepartment().getNamaDepartment();
             mailContent += "\nThe application was sent at " + applicant.getDateSent();
 
-            helper.setFrom("irhamz175@gmail.com", "Megapolitan Recruitment");
-            helper.setTo("irham.ilman@ui.ac.id");
+            helper.setFrom("automatic@gmail.com", "Megapolitan Recruitment"); //harus sama dengan yang di application.properties
+            helper.setTo("emaildestination@gmail.com");
             helper.setSubject(mailSubject);
             helper.setText(mailContent, false);
 

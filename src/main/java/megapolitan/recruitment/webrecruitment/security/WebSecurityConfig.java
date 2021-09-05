@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         return new BCryptPasswordEncoder();
     }
 
-    //uncomment this if you want to add another admin
+//    uncomment this if you want to add another admin
 //     @Autowired
 //     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //         auth.inMemoryAuthentication()
